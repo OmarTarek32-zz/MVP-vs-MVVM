@@ -13,13 +13,7 @@ struct User {
     var name: String
     var mobileNumber: String
     var email: String
+    var age: Int
     var gender: Gender
-    
-    init(name: String, mobileNumber: String, email: String, gender: Gender) {
-        self.name = name
-        self.mobileNumber = mobileNumber
-        self.email = email
-        self.gender = gender
-    }
 
 }

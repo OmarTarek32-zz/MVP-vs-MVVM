@@ -8,13 +8,14 @@
 
 import UIKit
 
-class updateProfileViewController: UIViewController {
+class UpdateProfileViewController: UIViewController {
     
     
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var nameTextField: UITextField!
     @IBOutlet private var mobileTextField: UITextField!
     @IBOutlet private var emailTextField: UITextField!
+    @IBOutlet weak var ageTextField: UITextField!
     @IBOutlet private var genderSegmentedController: UISegmentedControl!
     @IBOutlet private var saveButton: UIButton!
     
@@ -40,6 +41,10 @@ class updateProfileViewController: UIViewController {
         self.emailTextField.text = email
     }
     
+    func setAge(_ age: Int) {
+        self.ageTextField.text = String(age)
+    }
+    
     func setGender(atIndex index: Int) {
         self.genderSegmentedController.selectedSegmentIndex = index
     }
@@ -56,6 +61,10 @@ class updateProfileViewController: UIViewController {
         return self.emailTextField.text ?? ""
     }
     
+    func getAge() -> Int {
+        return Int(self.ageTextField.text ?? "0") ?? 0
+    }
+    
     func getGenderIndex() -> Int {
         return self.genderSegmentedController.selectedSegmentIndex
     }
@@ -68,12 +77,7 @@ class updateProfileViewController: UIViewController {
 
     @IBAction func saveButtonAction(_ sender: UIButton) {
         
-        if let error = self.updateProfilePresenter.validateInput(name: getName(), mobileNumber: getMobileNumber(), email: getEmail()) {
-            self.showAlert(withTitle: "Error", andErrorMessage: error.localizedDescription)
-        } else {
-            self.updateProfilePresenter.saveProfileData(name: getName(), mobileNumber: getMobileNumber(), gender: Gender(rawValue: getGenderIndex())! )
-            self.showAlert(withTitle: "Success", andErrorMessage: "The profile updated successfully")
-        }
+        self.updateProfilePresenter.saveButtonClicked()
     }
 }
 

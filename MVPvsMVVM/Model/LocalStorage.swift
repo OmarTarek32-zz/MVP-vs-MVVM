@@ -21,6 +21,6 @@ class LocalStorage {
     // get the user from remote or from local, based on your business
     private func getUser() -> User? {
 
-        return User(name: "Omar Tarek", mobileNumber: "01007336222", email: "dev.omartarek@gmail.com", gender: .male)
+        return User(name: "Omar Tarek", mobileNumber: "01007336222", email: "dev.omartarek@gmail.com", age: 26, gender: .male)
     }
 }

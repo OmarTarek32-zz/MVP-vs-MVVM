@@ -8,10 +8,11 @@
 
 import Foundation
 
-enum RegisterFormError: Error {
+enum UpdateProfileFormError: Error {
     case emptyName
     case invalidMobileNumber
     case invalidEmailAddress
+    case veryYoung
     
     var localizedDescription: String {
         
@@ -22,7 +23,9 @@ enum RegisterFormError: Error {
             return "Please, enter a valid mobile number"
         case .invalidEmailAddress:
             return "Please, enter a valid email address"
+        case .veryYoung:
+            return "Minimum age should be 18"
         }
-        
+
     }
 }

@@ -12,22 +12,27 @@ class UpdateProfilePresenter {
     
     var user: User?
     
-    weak var updateProfileViewController: updateProfileViewController!
+    weak var updateProfileViewController: UpdateProfileViewController!
     
-    init(user: User?, viewController: updateProfileViewController) {
+    init(user: User?, viewController: UpdateProfileViewController) {
         self.user = user
         self.updateProfileViewController = viewController
         
         if let user  = self.user {
-            self.updateProfileViewController.setName(user.name)
-            self.updateProfileViewController.setMobile(user.mobileNumber)
-            self.updateProfileViewController.setEmail(user.email)
-            self.updateProfileViewController.setGender(atIndex: user.gender.rawValue)
+            self.setUserDate(user)
         }
         
     }
     
-    func validateInput(name: String, mobileNumber: String, email: String) -> RegisterFormError? {
+    func setUserDate(_ user: User){
+        self.updateProfileViewController.setName(user.name)
+        self.updateProfileViewController.setMobile(user.mobileNumber)
+        self.updateProfileViewController.setEmail(user.email)
+        self.updateProfileViewController.setAge(user.age)
+        self.updateProfileViewController.setGender(atIndex: user.gender.rawValue)
+    }
+    
+    func validateInput(name: String, mobileNumber: String, email: String) -> UpdateProfileFormError? {
        
         if name.isEmpty {
             return .emptyName
@@ -37,6 +42,9 @@ class UpdateProfilePresenter {
             
         } else if !validate(email: email){
             return .invalidEmailAddress
+       
+        } else if user?.age ?? 0 < 18 {
+            return .veryYoung
         }
         
         return nil
@@ -54,21 +62,40 @@ class UpdateProfilePresenter {
         return emailTest.evaluate(with: email)
     }
     
+    func saveButtonClicked() {
+        if let error = self.validateInput(name: updateProfileViewController.getName(),
+                                          mobileNumber: updateProfileViewController.getMobileNumber(),
+                                          email: updateProfileViewController.getEmail()) {
+            
+            self.updateProfileViewController.showAlert(withTitle: "Error", andErrorMessage: error.localizedDescription)
+        } else {
+            self.saveProfileData(name: updateProfileViewController.getName(),
+                                 mobileNumber: updateProfileViewController.getMobileNumber(),
+                                 gender: Gender(rawValue: updateProfileViewController.getGenderIndex())! )
+            
+            self.updateProfileViewController.showAlert(withTitle: "Success", andErrorMessage: "The profile updated successfully")
+        }
+    }
+    
     func saveProfileData(name: String, mobileNumber: String, gender: Gender) {
         
+        self.updateLocalStoreWithUserData(name: name, mobileNumber: mobileNumber, gender: gender)
+        self.updateUserModel(name: name, mobileNumber: mobileNumber, gender: gender)
+    }
+    
+    func updateLocalStoreWithUserData(name: String, mobileNumber: String, gender: Gender) {
         // update local data
         LocalStorage.default.user?.name = name
         LocalStorage.default.user?.mobileNumber = mobileNumber
         LocalStorage.default.user?.gender = gender
-        
-        // update the model 
+    }
+    
+    func updateUserModel(name: String, mobileNumber: String, gender: Gender) {
+        // update the model
         self.user?.name = name
         self.user?.mobileNumber = mobileNumber
         self.user?.gender = gender
-        
     }
-    
-    
     
 }
 
