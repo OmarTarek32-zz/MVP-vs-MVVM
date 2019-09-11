@@ -12,9 +12,9 @@ class UpdateProfilePresenter {
     
     var user: User?
     
-    weak var updateProfileViewController: UpdateProfileViewController!
+    weak var updateProfileViewController: UserProfileViewProtocol!
     
-    init(user: User?, viewController: UpdateProfileViewController) {
+    init(user: User?, viewController: UserProfileViewProtocol) {
         self.user = user
         self.updateProfileViewController = viewController
         
