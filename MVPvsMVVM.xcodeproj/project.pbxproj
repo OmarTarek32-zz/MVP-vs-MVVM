@@ -19,7 +19,9 @@
 		581B6F652327968F0004F62E /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581B6F642327968F0004F62E /* Gender.swift */; };
 		581B6F6923279B710004F62E /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581B6F6823279B710004F62E /* LocalStorage.swift */; };
 		581B6F6B2327EDB80004F62E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581B6F6A2327EDB80004F62E /* Errors.swift */; };
-		582DC6942327F01100A11B92 /* UpdateProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582DC6932327F01100A11B92 /* UpdateProfilePresenter.swift */; };
+		582DC6942327F01100A11B92 /* UpdateProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582DC6932327F01100A11B92 /* UpdateProfileViewModel.swift */; };
+		582DC6972329B80500A11B92 /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582DC6962329B80500A11B92 /* Property.swift */; };
+		582DC6992329B8DA00A11B92 /* BindableControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582DC6982329B8DA00A11B92 /* BindableControls.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +60,9 @@
 		581B6F642327968F0004F62E /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		581B6F6823279B710004F62E /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		581B6F6A2327EDB80004F62E /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
-		582DC6932327F01100A11B92 /* UpdateProfilePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateProfilePresenter.swift; sourceTree = "<group>"; };
+		582DC6932327F01100A11B92 /* UpdateProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewModel.swift; sourceTree = "<group>"; };
+		582DC6962329B80500A11B92 /* Property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
+		582DC6982329B8DA00A11B92 /* BindableControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindableControls.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 		581B6F2A23278F5A0004F62E /* MVPvsMVVM */ = {
 			isa = PBXGroup;
 			children = (
+				582DC6952329B7E200A11B92 /* Helper */,
 				581B6F61232795800004F62E /* Model */,
 				581B6F602327956F0004F62E /* Presenter */,
 				581B6F5D232791B90004F62E /* View */,
@@ -175,7 +180,7 @@
 		581B6F602327956F0004F62E /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				582DC6932327F01100A11B92 /* UpdateProfilePresenter.swift */,
+				582DC6932327F01100A11B92 /* UpdateProfileViewModel.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -189,6 +194,15 @@
 				581B6F6A2327EDB80004F62E /* Errors.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		582DC6952329B7E200A11B92 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				582DC6962329B80500A11B92 /* Property.swift */,
+				582DC6982329B8DA00A11B92 /* BindableControls.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,12 +336,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				582DC6972329B80500A11B92 /* Property.swift in Sources */,
 				581B6F63232796280004F62E /* User.swift in Sources */,
 				581B6F652327968F0004F62E /* Gender.swift in Sources */,
 				581B6F6923279B710004F62E /* LocalStorage.swift in Sources */,
-				582DC6942327F01100A11B92 /* UpdateProfilePresenter.swift in Sources */,
+				582DC6942327F01100A11B92 /* UpdateProfileViewModel.swift in Sources */,
 				581B6F6B2327EDB80004F62E /* Errors.swift in Sources */,
 				581B6F2E23278F5A0004F62E /* updateProfileViewController.swift in Sources */,
+				582DC6992329B8DA00A11B92 /* BindableControls.swift in Sources */,
 				581B6F2C23278F5A0004F62E /* AppDelegate.swift in Sources */,
 				581B6F3423278F5A0004F62E /* MVPvsMVVM.xcdatamodeld in Sources */,
 			);

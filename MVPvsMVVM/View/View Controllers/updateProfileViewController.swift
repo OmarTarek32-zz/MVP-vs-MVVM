@@ -8,82 +8,68 @@
 
 import UIKit
 
-protocol UserProfileViewProtocol: class {
 
-    func setName(_ name: String)
-    func setMobile(_ mobile: String)
-    func setEmail(_ email: String)
-    func setAge(_ age: Int)
-    func setGender(atIndex index: Int)
-    func getName() -> String
-    func getMobileNumber() -> String
-    func getEmail() -> String
-    func getAge() -> Int
-    func getGenderIndex() -> Int
-    func showAlert(withTitle title: String, andErrorMessage message: String)
-}
-
-class UpdateProfileViewController: UIViewController, UserProfileViewProtocol {
-    
+class UpdateProfileViewController: UIViewController {
     
     @IBOutlet private var titleLabel: UILabel!
-    @IBOutlet private var nameTextField: UITextField!
-    @IBOutlet private var mobileTextField: UITextField!
-    @IBOutlet private var emailTextField: UITextField!
-    @IBOutlet weak var ageTextField: UITextField!
-    @IBOutlet private var genderSegmentedController: UISegmentedControl!
+    @IBOutlet private var nameTextField: BindingTextField!
+    @IBOutlet private var mobileTextField: BindingTextField!
+    @IBOutlet private var emailTextField: BindingTextField!
+    @IBOutlet private var ageTextField: BindingTextField!
+    @IBOutlet private var genderSegmentedController: BindingSegmentedControl!
     @IBOutlet private var saveButton: UIButton!
     
-    var updateProfilePresenter: UpdateProfilePresenter!
+    var updateProfileViewModel: UpdateProfileViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
         let user = LocalStorage.default.user
-        updateProfilePresenter = UpdateProfilePresenter(user: user, viewController: self)
+        updateProfileViewModel = UpdateProfileViewModel(user: user)
         
+        bindViewModel()
+        
+    }
+    
+    func bindViewModel() {
+        
+        self.updateProfileViewModel.name.subscribe{ [unowned self]  in
+            self.nameTextField.text = $0
+        }
+        self.updateProfileViewModel.email.subscribe{ [unowned self] in
+            self.emailTextField.text = $0
+        }
+        self.updateProfileViewModel.mobileNumber.subscribe{ [unowned self] in
+            self.mobileTextField.text = $0
+        }
+        self.updateProfileViewModel.age.subscribe{ [unowned self] in
+            self.ageTextField.text = $0 != nil ? String($0!) : ""
+        }
+        self.updateProfileViewModel.gender.subscribe{ [unowned self] in
+            self.genderSegmentedController.selectedSegmentIndex = $0 ?? 0
+        }
+        
+        self.nameTextField.subscribe { [unowned self] in
+            self.updateProfileViewModel.name.value = $0
+        }
+        self.emailTextField.subscribe { [unowned self] in
+            self.updateProfileViewModel.email.value = $0
+        }
+        self.mobileTextField.subscribe { [unowned self] in
+            self.updateProfileViewModel.mobileNumber.value = $0
+        }
+        self.ageTextField.subscribe { [unowned self] in
+            self.updateProfileViewModel.age.value = Int($0)
+        }
+        self.genderSegmentedController.subscribe { [unowned self] in
+            self.updateProfileViewModel.gender.value = Int($0)
+        }
+        
+        self.updateProfileViewModel.messageObserver = { [unowned self] title, message in
+            self.showAlert(withTitle: title, andErrorMessage: message)
+        }
     }
 
-    func setName(_ name: String) {
-        self.nameTextField.text = name
-    }
-    
-    func setMobile(_ mobile: String) {
-        self.mobileTextField.text = mobile
-    }
-    
-    func setEmail(_ email: String) {
-        self.emailTextField.text = email
-    }
-    
-    func setAge(_ age: Int) {
-        self.ageTextField.text = String(age)
-    }
-    
-    func setGender(atIndex index: Int) {
-        self.genderSegmentedController.selectedSegmentIndex = index
-    }
-    
-    func getName() -> String {
-        return self.nameTextField.text ?? ""
-    }
-    
-    func getMobileNumber() -> String {
-        return self.mobileTextField.text ?? ""
-    }
-    
-    func getEmail() -> String {
-        return self.emailTextField.text ?? ""
-    }
-    
-    func getAge() -> Int {
-        return Int(self.ageTextField.text ?? "0") ?? 0
-    }
-    
-    func getGenderIndex() -> Int {
-        return self.genderSegmentedController.selectedSegmentIndex
-    }
-    
     func showAlert(withTitle title: String, andErrorMessage message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
@@ -92,7 +78,7 @@ class UpdateProfileViewController: UIViewController, UserProfileViewProtocol {
 
     @IBAction func saveButtonAction(_ sender: UIButton) {
         
-        self.updateProfilePresenter.saveButtonClicked()
+        self.updateProfileViewModel.saveButtonClicked()
     }
 }
 
